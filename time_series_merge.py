@@ -1,8 +1,9 @@
 import os
 import arcpy
 import pandas
-from fclist import fc_names
-from fclist import date_list
+import fclist
+
+#date_list and fc_date_lookup are both not being used yet.
 
 fd_name = "v1"
 out_ws = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day.gdb"
@@ -40,7 +41,7 @@ def populate_fc(fc, date_df):
 def create_fcs_from_template():
     # uses a template feature class and a list of and 
     # feature class names to create multiple copies of the template.
-    for fc_name in fc_names:
+    for fc_name in fclist.fc_names:
         create_fc(fc_name)
 
 def create_df(df, datestring):
@@ -63,6 +64,8 @@ master_df = pandas.read_excel(open(r'C:\Users\john.churchill\Documents\PROJECTS\
 #    ####    print(row['jurisdiction'] + " - " + str(row['percent']))
 
 #my_master_df = setup_data(full_datelist)
+# TEST WITH THIS AND THEN REPLACE short_date_list with fclist.date_list
+# ALSO replace print() with a call to populate_fc()!!
 short_date_list = ["2020-03-16", "2020-03-17"]
 for item in short_date_list:
     my_df = create_df(master_df, item)
