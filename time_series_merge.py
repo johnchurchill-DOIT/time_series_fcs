@@ -2,13 +2,15 @@ import os
 import arcpy
 import pandas
 import fclist
+import randrange from random as rr
 
 # USER CONFIGURATION
-fd_name = "v1"
+fd_name = "dum_data"
 out_ws = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day_v2.gdb"
 template_fc = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day_v2.gdb\template_county_bnd_gen_DoIT"
 merge_these = False
 merged_output_name = "\\time_series_3_16_to_6_9" # If merge_these what are
+dummy_data = False # Set to True to Generate DEMO DATA
 # we going to call the output (output will be created in the out_ws)
 # USER CONFIGURATION
 
@@ -29,7 +31,10 @@ def populate_fc(fc, date_df):
         for row in upd_cursor:
             for index, dfrow in date_df.iterrows():
                 if row[0] == dfrow['jurisdiction']:
-                    row[1] = dfrow['percent']
+                    if dummy_data:
+                        row[1] = get_dummy_data(dfrow['percent'])
+                    else:
+                        row[1] = dfrow['percent']
                     row[2] = dfrow['date']
                     upd_cursor.updateRow(row)
 
@@ -39,6 +44,11 @@ def create_fcs_from_template():
     for fc_name in fclist.fc_names:
         create_fc(fc_name)
     return True
+
+def get_dummy_data(tru_value):
+    rand_value = rr(0, 45, 2) / 100
+    dummy_value = tru_value * rand_value
+    return dummy_value
 
 def create_df(df, datestring):
     # can send the master_df and a single date (type=string)
