@@ -3,10 +3,14 @@ import arcpy
 import pandas
 import fclist
 
-
+# USER CONFIGURATION
 fd_name = "v1"
-out_ws = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day.gdb"
-template_fc = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\MasterCaseTracker_TimeSeries.gdb\Template_County_FC_v2"
+out_ws = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day_v2.gdb"
+template_fc = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day_v2.gdb\template_county_bnd_gen_DoIT"
+merge_these = False
+merged_output_name = "\\time_series_3_16_to_6_9" # If merge_these what are
+# we going to call the output (output will be created in the out_ws)
+# USER CONFIGURATION
 
 # Test First to see if fd exists
 if not arcpy.Exists(os.path.join(out_ws, fd_name)):
@@ -43,6 +47,11 @@ def create_df(df, datestring):
     date_df_only = df[date_df]
     return date_df_only
 
+def merge_all_fcs(list_of_fcs, out_fc):
+    rslt = arcpy.Merge_management(list_of_fcs, out_fc)
+    fcnum = str(len(list_of_fcs))
+    if rslt:
+        print(fcnum + " Feature Classes were Merged into " + out_fc)
 
 master_df = pandas.read_excel(open(r'C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\Daily_Positivity_Data_by_Jurisdiction.xlsx', 'rb'), sheet_name = 'Sheet2')
 
@@ -71,3 +80,11 @@ if it_worked:
 
 # OPTION B do it anyway (uncomment the next line)
 #process_all_in_list(fclist.date_list)
+
+if merge_these:
+    # boolean value set at the top of the script determines
+    # whether or not you wish to merge all these feature classes
+    arcpy.env.workspace = out_ws
+    all_feature_classes = arcpy.ListFeatureClasses()
+    merged_output = out_ws + merged_output_name
+    merge_all_fcs(all_feature_classes, merged_output)
