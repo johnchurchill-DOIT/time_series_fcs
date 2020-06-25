@@ -16,7 +16,9 @@ dummy_data = False # Set to True to Generate DEMO DATA
 
 # Test First to see if fd exists
 if not arcpy.Exists(os.path.join(out_ws, fd_name)):
-    arcpy.CreateFeatureDataset_management(out_ws, fd_name)
+    # Creating a spatial reference object
+    sr = arcpy.SpatialReference(template_fc)
+    arcpy.CreateFeatureDataset_management(out_ws, fd_name, sr)
 
 def create_fc(fc):
     #arcpy.CreateFeatureClass_management(fc)
