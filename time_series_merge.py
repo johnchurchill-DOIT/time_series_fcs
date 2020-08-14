@@ -14,16 +14,16 @@ from random import randrange as rr
 # Note: there is also a it_worked var that calls "create_fcs_from_template()"
 # that may need to be uncommented (near the end of the script).
 table_config = "new_config" # "old_config"
-data_file = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\Daily_Positivity_Data_by_Jurisdiction.xlsx" 
+data_file = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\Daily_Positivity_Data_by_Jurisdiction_8_13_2020.xlsx" 
 sheet_name = "pivot" # "old"
-fd_name = "new_data3"
-out_ws = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\MasterCaseTracker_updated_7_13_2020.gdb"
+fd_name = "new_data"
+out_ws = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\PositivityData_updated_8_13_2020.gdb"
 # template_fc = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\TS_seven_day_v2.gdb\template_county_bnd_gen_DoIT"
 template_fc = r"C:\Users\john.churchill\Documents\PROJECTS\Recovery_Dashboard\dummy_data.gdb\template_fc3"
 merge_these = False # set to True to conduct the merge
-merged_output_name = "\\time_series_3_16_to_7_13" # If merge_these what are
+merged_output_name = "\\time_series_3_16_to_8_12" # If merge_these what
+# are we calling the output (output will be created in the out_ws)
 dummy_data = False # Set to True to Generate DEMO DATA
-# we going to call the output (output will be created in the out_ws)
 # USER CONFIGURATION
 
 # Test First to see if fd exists
